@@ -112,7 +112,7 @@ module Resque
   def redis=(server)
     case server
     when String
-      if server =~ /rediss?\:\/\//
+      if server =~ /rediss?\:\/\// || server =~ /unix\:\/\//
         redis = Redis.new(:url => server, :thread_safe => true)
       else
         server, namespace = server.split('/', 2)

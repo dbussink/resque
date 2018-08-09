@@ -23,6 +23,16 @@ describe "Resque" do
     assert_equal 'namespace', Resque.redis.namespace
   end
 
+  it "can set options using a redis URL" do
+    Resque.redis = 'redis://localhost:9736'
+    assert_equal 'redis://localhost:9736', Resque.redis._client.options[:url]
+  end
+
+  it "can set options using a unix URL" do
+    Resque.redis = 'unix:///tmp/redis.sock'
+    assert_equal 'unix:///tmp/redis.sock', Resque.redis._client.options[:url]
+  end
+
   it "redis= works correctly with a Redis::Namespace param" do
     new_redis = Redis.new(:host => "localhost", :port => 9736)
     new_namespace = Redis::Namespace.new("namespace", :redis => new_redis)
